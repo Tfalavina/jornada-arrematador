@@ -109,7 +109,7 @@ section{padding-block:72px;border-bottom:1px solid var(--line)}
 @media (max-width:860px){.hero-grid{grid-template-columns:1fr}.facts{grid-template-columns:1fr 1fr}}
 
 /* ===== Comece aqui ===== */
-.starts{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.starts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 .start{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px;display:grid;gap:12px;align-content:start;transition:border-color .3s}
 .start.done{border-color:rgba(255,106,31,.6)}
 .start .n{font-family:var(--display);font-stretch:125%;font-weight:900;font-size:64px;line-height:.8;color:transparent;-webkit-text-stroke:1.5px var(--orange)}
@@ -122,7 +122,7 @@ section{padding-block:72px;border-bottom:1px solid var(--line)}
 .tick input:checked + span{color:var(--fg)}
 .note{font-size:14.5px;color:var(--muted);margin-top:16px}
 .note a{color:var(--orange);font-weight:600}
-@media (max-width:700px){.starts{grid-template-columns:1fr}}
+@media (max-width:1000px){.starts{grid-template-columns:1fr}}
 
 /* ===== Mapa da jornada (gráfico) ===== */
 .map{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:28px 24px 24px;overflow-x:auto}
@@ -448,9 +448,9 @@ footer p{max-width:80ch}
     <a href="#ranking" style="--c:var(--b1)">Ranking</a>
     <div class="grp" style="--c:var(--b2)"><i></i>Fase 2</div>
     <a href="#bloco2" style="--c:var(--b2)">Arrematei, e agora?</a>
-    <a href="#pos" style="--c:var(--b2)">Pós-arrematação</a>
-    <a href="#plus" style="--c:var(--green)">Benefício Plus</a>
-    <a href="#relatorios" style="--c:var(--b2)">Relatórios</a>
+    <a href="#relatorios" style="--c:var(--b2)">Tomada de decisão</a>
+    <a href="#pos" style="--c:var(--b2)">Documentação</a>
+    <a href="#plus" style="--c:var(--green)">Desocupação</a>
     <div class="grp" style="--c:var(--b3)"><i></i>Fase 3</div>
     <a href="#bloco3" style="--c:var(--b3)">Sua jornada</a>
     <a href="#app" style="--c:var(--b3)">Arrematador App</a>
@@ -462,7 +462,7 @@ footer p{max-width:80ch}
     <a href="#acessos" style="--c:var(--orange)">Acessos e contatos</a>
   </nav>
   <div class="side-prog">
-    <div class="row"><span>Seu progresso</span><b id="progTxt">0/5</b></div>
+    <div class="row"><span>Seu progresso</span><b id="progTxt">0/6</b></div>
     <div class="pbar"><i id="progBar"></i></div>
     <a class="side-cta" href="https://arrematador-homolog.netlify.app/" target="_blank" rel="noopener">Abrir Arrematador App</a>
   </div>
@@ -501,7 +501,7 @@ footer p{max-width:80ch}
 <!-- ===== Comece aqui ===== -->
 <section id="comece">
   <div class="wrap">
-    <div class="sh rv"><div class="lbl">Primeiro dia</div><h2>Comece aqui</h2><p class="lead">Dois passos para liberar tudo. Marque quando concluir.</p></div>
+    <div class="sh rv"><div class="lbl">Primeiro dia</div><h2>Comece aqui</h2><p class="lead">Três passos para liberar tudo. Marque quando concluir.</p></div>
     <div class="starts">
       <div class="start rv" data-chk="c-checkin">
         <div class="n">1</div>
@@ -510,8 +510,15 @@ footer p{max-width:80ch}
         <div class="row"><a class="btn pri sm" href="https://brunolucarelli.com.br/check-in-mentoria" target="_blank" rel="noopener">Fazer check-in</a></div>
         <label class="tick"><input type="checkbox" id="c-checkin"><span>Fiz o check-in e entrei no grupo</span></label>
       </div>
-      <div class="start rv" data-chk="c-app">
+      <div class="start rv" data-chk="c-academia">
         <div class="n">2</div>
+        <h3>Acesse a Academia dos Leilões</h3>
+        <p>É a plataforma com as aulas, os cursos e as ferramentas. O acesso chega no e-mail <b style="color:var(--fg)">"Seus dados de acesso"</b>. Comece pela Fase 0 e siga para o Desafio 21 Dias.</p>
+        <div class="row"><a class="btn pri sm" href="https://membros.academiadosleiloes.com/" target="_blank" rel="noopener">Entrar na Academia</a></div>
+        <label class="tick"><input type="checkbox" id="c-academia"><span>Acessei a Academia dos Leilões</span></label>
+      </div>
+      <div class="start rv" data-chk="c-app">
+        <div class="n">3</div>
         <h3>Acesse o Arrematador App</h3>
         <p>É o site do aluno. Lá estão a Garimpagem, o mapa dos imóveis, a Calculadora, o Guia Leilões e o Arrematador Vendas.</p>
         <div class="row"><a class="btn pri sm" href="https://arrematador-homolog.netlify.app/" target="_blank" rel="noopener">Abrir Arrematador App</a><a class="btn sm" href="#app">Ver o que tem no app</a></div>
@@ -533,10 +540,11 @@ footer p{max-width:80ch}
           <a class="chip" href="#desafio" style="--c:var(--b1)">Desafio 21 Dias<small>Aprenda e execute</small></a>
           <a class="chip" href="#guia" style="--c:var(--green)">Guia Leilões<small>Oportunidade pronta</small></a>
           <a class="chip" href="#app" style="--c:var(--b3)">Calculadora<small>Simule o lucro</small></a>
+          <a class="chip" href="#gratuitos" style="--c:var(--b3)">Arrematador Crédito<small>Análise de crédito</small></a>
         </div></div>
         <div class="stage" style="--c:var(--b1)"><div class="node">2</div><h4>No lance</h4><div class="chips">
           <a class="chip" href="https://www.arrematadorcaixa.com.br/creci" target="_blank" rel="noopener" style="--c:var(--b2)">CRECI do Arrematador Caixa<small>Do estado do imóvel</small></a>
-          <a class="chip" href="#gratuitos" style="--c:var(--b3)">Arrematador Crédito<small>Para financiar</small></a>
+          <a class="chip" href="#app" style="--c:var(--b3)">Gestão dos imóveis<small>Acompanhe no App</small></a>
         </div></div>
         <div class="stage" style="--c:var(--b2)"><div class="node">3</div><h4>Lance vencedor</h4><div class="chips">
           <a class="chip" href="#relatorios" style="--c:var(--b2)">Raio-X do Imóvel<small>Só Caixa, Venda Online e Compra Direta</small></a>
@@ -552,7 +560,7 @@ footer p{max-width:80ch}
           <a class="chip" href="#servicos" style="--c:var(--b3)">Arrematador Desocupa<small>Imissão na posse</small></a>
         </div></div>
         <div class="stage" style="--c:var(--b3)"><div class="node">6</div><h4>Valorizar e vender</h4><div class="chips">
-          <a class="chip" href="#servicos" style="--c:var(--b3)">Arrematador Reforma<small>Gestão da obra</small></a>
+          <a class="chip" href="#app" style="--c:var(--b3)">Mapa do Arrematador<small>Arrematadores na sua região</small></a>
           <a class="chip" href="#app" style="--c:var(--b3)">Arrematador Vendas<small>Anuncie no app</small></a>
         </div></div>
       </div>
@@ -693,32 +701,8 @@ footer p{max-width:80ch}
   <div class="wrap">
     <div class="block-head rv"><div class="block-num">02</div><div><div class="lbl">Fase 2 · Depois do lance</div><h2>Arrematei, e agora?</h2><p class="lead">O que você recebe depois de arrematar depende da modalidade.</p></div></div>
 
-    <div class="zone rv" id="pos" style="--c:var(--b2)">
-      <div class="pills"><span class="pill-big">✓ Válido para todas as modalidades</span><span class="pill-sm">Gratuito</span><span class="pill-sm">Com nosso CRECI</span></div>
-      <div class="zone-grid">
-        <div>
-          <h3>Pós-arrematação</h3>
-          <p class="zone-p">O Arrematador Caixa cuida da burocracia por você. ITBI, escritura ou contrato, registro, notas devolutivas e débitos. Tudo conduzido pelo time em um grupo de WhatsApp. Não precisa assinar contrato.</p>
-        </div>
-        <div class="row zone-act"><button class="btn pri" data-modal="m-pos">Ver em detalhe</button><a class="btn" href="https://www.arrematadorcaixa.com.br/creci" target="_blank" rel="noopener">CRECI por estado</a></div>
-      </div>
-    </div>
-
-    <div class="plus rv" id="plus">
-      <div class="plus-badge">Plus<small>Gratuito</small></div>
-      <div>
-        <div class="pills" style="--c:var(--green)"><span class="pill-big">Exclusivo Venda Online e Compra Direta</span><span class="pill-sm">Só para alunos</span></div>
-        <h3 style="margin-top:14px">Benefício Plus</h3>
-        <p>Arrematou em Venda Online ou Compra Direta com o nosso CRECI? Como aluno, você ganha mais dois benefícios, sem pagar nada.</p>
-        <div class="plus-items">
-          <div><b>Diligência Presencial</b><span>Alguém vai até o imóvel e verifica o estado real dele. Você vê o que a foto do edital não mostra.</span></div>
-          <div><b>Desocupação Amigável</b><span>O jurídico notifica o ex-mutuário por SMS, WhatsApp e e-mail e procura um acordo para a saída.</span></div>
-        </div>
-      </div>
-    </div>
-
     <div class="zone rv" id="relatorios" style="--c:var(--b2)">
-      <h3 style="margin-top:0">Relatórios</h3>
+      <h3 style="margin-top:0">Precisa de ajuda na tomada de decisão?</h3>
       <p class="zone-p">Dois relatórios, dois momentos. O Guia Report ajuda a decidir antes de comprar. O Raio-X confere o que você comprou.</p>
       <div class="vs" style="margin-top:18px">
         <div class="rep" style="--c:var(--green)">
@@ -734,6 +718,30 @@ footer p{max-width:80ch}
           <h3>Raio-X do Imóvel</h3>
           <p>Matrícula, processos, ex-mutuário, IPTU, condomínio e ocupação. Chega no WhatsApp antes do vencimento do boleto.</p>
           <button class="btn pri" data-modal="m-raiox">Ver o que vem</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="zone rv" id="pos" style="--c:var(--b2)">
+      <div class="pills"><span class="pill-big">✓ Válido para todas as modalidades</span><span class="pill-sm">Gratuito</span><span class="pill-sm">Com nosso CRECI</span></div>
+      <div class="zone-grid">
+        <div>
+          <h3>Precisa de apoio na documentação de transferência do imóvel?</h3>
+          <p class="zone-p"><b>Pós-arrematação:</b> o Arrematador Caixa cuida da burocracia por você. ITBI, escritura ou contrato, registro, notas devolutivas e débitos. Tudo conduzido pelo time em um grupo de WhatsApp. Não precisa assinar contrato.</p>
+        </div>
+        <div class="row zone-act"><button class="btn pri" data-modal="m-pos">Ver em detalhe</button><a class="btn" href="https://www.arrematadorcaixa.com.br/creci" target="_blank" rel="noopener">CRECI por estado</a></div>
+      </div>
+    </div>
+
+    <div class="plus rv" id="plus">
+      <div class="plus-badge">Plus<small>Gratuito</small></div>
+      <div>
+        <div class="pills" style="--c:var(--green)"><span class="pill-big">Exclusivo Venda Online e Compra Direta</span><span class="pill-sm">Só para alunos</span></div>
+        <h3 style="margin-top:14px">Precisa de ajuda para desocupar?</h3>
+        <p><b>Benefício Plus:</b> arrematou em Venda Online ou Compra Direta com o nosso CRECI? Como aluno, você ganha mais dois benefícios, sem pagar nada.</p>
+        <div class="plus-items">
+          <div><b>Diligência Presencial</b><span>Alguém vai até o imóvel e verifica o estado real dele. Você vê o que a foto do edital não mostra.</span></div>
+          <div><b>Desocupação Amigável</b><span>O jurídico notifica o ex-mutuário por SMS, WhatsApp e e-mail e procura um acordo para a saída.</span></div>
         </div>
       </div>
     </div>
@@ -1012,11 +1020,11 @@ footer p{max-width:80ch}
 
 
   /* Comece aqui + progresso */
-  ['c-checkin','c-app','c-m1','c-m2','c-m3'].forEach(function(id){
+  ['c-checkin','c-academia','c-app','c-m1','c-m2','c-m3'].forEach(function(id){
     var b=document.getElementById(id); b.checked=!!st[id];
     b.addEventListener('change',function(){st[id]=b.checked;save();paint();});
   });
-  var ALL=['c-checkin','c-app','c-m1','c-m2','c-m3'];
+  var ALL=['c-checkin','c-academia','c-app','c-m1','c-m2','c-m3'];
   function paint(){
     var n=ALL.filter(function(k){return st[k]}).length;
     document.getElementById('progTxt').textContent=n+'/'+ALL.length;

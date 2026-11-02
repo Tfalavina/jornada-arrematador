@@ -1130,5 +1130,18 @@ footer p{max-width:80ch}
 })();
 </script>
 
+<!-- App bloqueado: para liberar, troque APP_LIBERADO para true -->
+<style>.app-lock{pointer-events:none!important;cursor:not-allowed!important;opacity:.55!important;filter:grayscale(.4)}.app-lock-tag{display:inline-block;margin-left:8px;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:#2a2f36;color:#d8d4cc;vertical-align:middle;white-space:nowrap}</style>
+<script>
+(function(){var APP_LIBERADO=false; if(APP_LIBERADO) return;
+ function lock(){document.querySelectorAll('a[href*="arrematador.app"]').forEach(function(a){
+   if(a.classList.contains('app-lock')) return;
+   a.removeAttribute('href'); a.removeAttribute('target'); a.setAttribute('aria-disabled','true'); a.setAttribute('tabindex','-1'); a.classList.add('app-lock');
+   var t=document.createElement('span'); t.className='app-lock-tag'; t.textContent='Em breve';
+   var em=a.querySelector('em'); if(em){em.textContent=''; em.appendChild(t);} else a.appendChild(t);
+ });}
+ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',lock); else lock();
+})();
+</script>
 </body>
 </html>

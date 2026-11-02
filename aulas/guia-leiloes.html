@@ -32,4 +32,17 @@ ul.ck{list-style:none;margin:0;padding:0;display:grid;gap:8px} ul.ck li{padding-
 <div class="k">Nós fazemos para você</div><h1>Guia Leilões</h1><p class="lead">Imóveis da Caixa já analisados pela equipe do Arrematador, prontos para arrematar. As oportunidades chegam no seu WhatsApp. Você só decide se dá o lance.</p>
 <div class="stats"><div><strong>100%</strong><span>taxa de sucesso, todos já arrematados pela comunidade</span></div><div><strong>47%</strong><span>ROI médio</span></div><div><strong>8 meses</strong><span>prazo médio de venda</span></div></div><h2>Como funciona</h2><ol class="st"><li><div><b>A equipe garimpa a Caixa toda semana</b><span>Os analistas filtram os imóveis com mais potencial.</span></div></li><li><div><b>Cada imóvel passa por uma análise completa</b><span>Valor de mercado com corretores locais, IPTU, condomínio, matrícula e ROI com custos reais.</span></div></li><li><div><b>Só entra com ROI acima de 20%</b><span>O que não passa em todos os filtros não é publicado.</span></div></li><li><div><b>A oportunidade chega no seu WhatsApp</b><span>Você vê os números, lê o Guia Report e decide se vai arrematar. Na Compra Direta não tem disputa de lance. Quem chega primeiro leva.</span></div></li></ol><h2>Guia Report</h2><p>O relatório completo de cada oportunidade do Guia. Ele transforma a análise em decisão de compra.</p><ul class="ck"><li>Análise da matrícula</li><li>Análise jurídica dos processos</li><li>Análise do ex-mutuário</li><li>Levantamento de IPTU</li><li>Condomínio, com e sem ação judicial</li><li>Análise da ocupação</li><li>Valor de mercado validado com no mínimo 3 corretores locais</li><li>ROI com todos os custos: compra, dívidas, ITBI e cartório</li><li>Viabilidade financeira</li><li>Score de oportunidade, para comparar imóveis</li><li>Recomendação de compra</li></ul><div class="note"><b>Guia Report ou Raio-X?</b> O Guia Report vem antes de arrematar, só nas oportunidades do Guia. O Raio-X vem depois de arrematar, em Venda Online e Compra Direta com o nosso CRECI.</div>
 <p class="foot">Dúvida de acesso ou da plataforma? Fale com o <a href="https://wa.me/5519999352343" target="_blank" rel="noopener">Suporte ao Aluno no WhatsApp</a>, (19) 99935-2343.</p>
-</main></body></html>
+</main><!-- App bloqueado: para liberar, troque APP_LIBERADO para true -->
+<style>.app-lock{pointer-events:none!important;cursor:not-allowed!important;opacity:.55!important;filter:grayscale(.4)}.app-lock-tag{display:inline-block;margin-left:8px;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:#2a2f36;color:#d8d4cc;vertical-align:middle;white-space:nowrap}</style>
+<script>
+(function(){var APP_LIBERADO=false; if(APP_LIBERADO) return;
+ function lock(){document.querySelectorAll('a[href*="arrematador.app"]').forEach(function(a){
+   if(a.classList.contains('app-lock')) return;
+   a.removeAttribute('href'); a.removeAttribute('target'); a.setAttribute('aria-disabled','true'); a.setAttribute('tabindex','-1'); a.classList.add('app-lock');
+   var t=document.createElement('span'); t.className='app-lock-tag'; t.textContent='Em breve';
+   var em=a.querySelector('em'); if(em){em.textContent=''; em.appendChild(t);} else a.appendChild(t);
+ });}
+ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',lock); else lock();
+})();
+</script>
+</body></html>

@@ -12,3 +12,9 @@ No DNS de `arrematador.com`, crie um registro:
 | Tipo | Nome | Valor |
 |---|---|---|
 | CNAME | jornada | tfalavina.github.io |
+
+## Página de renovação
+
+- Endereço: https://jornada.arrematador.com/renovacao/
+- Arquivo: `renovacao/index.html`
+- Cópia da página principal para alunos que renovaram. Não tem o passo de check-in. Os 3 primeiros passos são: Arrematador App, grupo do Guia Leilões e grupo Escala.

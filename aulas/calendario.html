@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calendário de Turmas, Arrematador</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0F0F11;
+    --surface:#1A1A1D;
+    --heading:#EDE9DE;
+    --aula-bg:#3E5A79;
+    --gold:#C79A3C;
+    --wax:#C1483A;
+    --slate:#71937F;
+    --border:#2B2B2F;
+    --text:#D6D3C9;
+    --muted:#8D8F94;
+    --radius:2px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'IBM Plex Sans', sans-serif;
+    padding:32px 16px 64px;
+  }
+  .wrap{
+    max-width:760px;
+    margin:0 auto;
+  }
+  header.page-head{
+    border-bottom:2px solid var(--gold);
+    padding-bottom:18px;
+    margin-bottom:24px;
+  }
+  .kicker{
+    font-size:13px;
+    color:var(--gold);
+    font-weight:600;
+    letter-spacing:0.02em;
+    margin-bottom:6px;
+  }
+  h1{
+    font-family:'Source Serif 4', serif;
+    font-weight:600;
+    font-size:30px;
+    margin:0 0 4px;
+    color:var(--heading);
+  }
+  .subtitle{
+    color:var(--muted);
+    font-size:14.5px;
+    margin:0;
+  }
+
+  nav.tabs:empty{display:none}
+  nav.tabs{
+    display:flex;
+    gap:2px;
+    margin-bottom:20px;
+    border-bottom:1px solid var(--border);
+  }
+  nav.tabs button{
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:14.5px;
+    font-weight:600;
+    color:var(--muted);
+    background:none;
+    border:none;
+    padding:10px 18px 12px;
+    cursor:pointer;
+    position:relative;
+    top:1px;
+  }
+  nav.tabs button.active{
+    color:var(--heading);
+    border-bottom:2.5px solid var(--gold);
+  }
+  nav.tabs button:hover:not(.active){
+    color:var(--heading);
+  }
+
+  .legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:16px;
+    margin-bottom:26px;
+    font-size:13px;
+    color:var(--muted);
+  }
+  .legend span{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+  }
+  .dot{
+    width:9px;
+    height:9px;
+    border-radius:50%;
+    display:inline-block;
+  }
+  .dot.boas-vindas{background:var(--gold);}
+  .dot.aula{background:var(--aula-bg);}
+  .dot.monitoria{background:var(--slate);}
+  .dot.avancada{background:var(--wax);}
+
+  .months{
+    display:flex;
+    gap:28px;
+    flex-wrap:wrap;
+  }
+  .month-block{
+    flex:1 1 320px;
+    min-width:280px;
+  }
+  .month-name{
+    font-family:'Source Serif 4', serif;
+    font-size:18px;
+    font-weight:600;
+    color:var(--heading);
+    margin:0 0 10px;
+    padding-bottom:8px;
+    border-bottom:1px solid var(--border);
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:3px;
+  }
+  .weekday{
+    font-size:11px;
+    font-weight:600;
+    color:var(--muted);
+    text-align:center;
+    padding-bottom:6px;
+  }
+  .cell{
+    min-height:52px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:2px;
+    position:relative;
+    padding:4px 2px;
+    font-size:12px;
+    color:var(--text);
+    background:var(--surface);
+    border:1px solid var(--border);
+  }
+  .cell.empty{
+    background:none;
+    border:none;
+    min-height:0;
+  }
+  .cell .day-num{
+    font-size:11px;
+    line-height:1;
+  }
+  .cell .day-label{
+    font-size:10px;
+    line-height:1.15;
+    text-align:center;
+    font-weight:600;
+  }
+  .cell.event{
+    cursor:pointer;
+    color:#fff;
+  }
+  .cell.event .day-num{
+    opacity:0.75;
+    font-weight:500;
+  }
+  .cell.event.boas-vindas{background:var(--gold); color:#211803;}
+  .cell.event.aula{background:var(--aula-bg);}
+  .cell.event.monitoria{background:var(--slate); color:#0F1A14;}
+  .cell.event.avancada{background:var(--wax);}
+  .cell.event:hover{filter:brightness(1.15);}
+  .cell.event.selected{
+    outline:2.5px solid var(--heading);
+    outline-offset:2px;
+  }
+  .cell.today::before{
+    content:"";
+    position:absolute;
+    top:3px;
+    right:3px;
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:var(--bg);
+    box-shadow:0 0 0 1.5px var(--wax);
+  }
+  .cell.today:not(.event){
+    border:1.5px solid var(--wax);
+    font-weight:600;
+    color:var(--wax);
+  }
+
+  .detail{
+    margin-top:28px;
+    padding:20px 22px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-left:4px solid var(--gold);
+  }
+  .detail .d-date{
+    font-size:12.5px;
+    color:var(--muted);
+    font-weight:600;
+    margin-bottom:6px;
+  }
+  .detail .d-title{
+    font-family:'Source Serif 4', serif;
+    font-size:19px;
+    font-weight:600;
+    color:var(--heading);
+  }
+  .detail.empty .d-title{
+    color:var(--muted);
+    font-family:'IBM Plex Sans', sans-serif;
+    font-weight:400;
+    font-size:14.5px;
+  }
+
+  @media (max-width:480px){
+    h1{font-size:24px;}
+    nav.tabs button{padding:9px 12px 10px; font-size:13.5px;}
+    .cell{font-size:12px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="page-head">
+    <div class="kicker">Mentoria Arrematador</div>
+    <h1>Calendário de Turmas</h1>
+    <p class="subtitle">Turma 26 · Datas das aulas, monitoria e encontros ao vivo</p>
+  </header>
+
+  <nav class="tabs" id="tabs"></nav>
+
+  <div class="legend">
+    <span><i class="dot boas-vindas"></i>Boas-vindas</span>
+    <span><i class="dot aula"></i>Aula</span>
+    <span><i class="dot monitoria"></i>Monitoria</span>
+    <span><i class="dot avancada"></i>Encerramento e Premiação</span>
+  </div>
+
+  <div class="months" id="months"></div>
+
+  <div class="detail empty" id="detail">
+    <div class="d-title">Clique em um dia destacado para ver os detalhes da aula.</div>
+  </div>
+
+</div>
+
+<script>
+const DIAS_SEMANA = ['dom','seg','ter','qua','qui','sex','sáb'];
+const MESES = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+
+const turmas = {
+  T26: {
+    label: 'Turma 26',
+    months: [{ano:2026, mes:10}],
+    events: {
+      '2026-11-05': {tipo:'boas-vindas', titulo:'Boas-vindas T26', curto:'Boas-vindas'},
+      '2026-11-09': {tipo:'aula', titulo:'Aula 01, Desafio 1/3: O Código da Lei', curto:'Aula 01 - Lei'},
+      '2026-11-16': {tipo:'aula', titulo:'Aula 02, Desafio 2/3: Módulo Caixa', curto:'Aula 02 - Caixa'},
+      '2026-11-19': {tipo:'monitoria', titulo:'Monitoria, Aula de Dúvidas', curto:'Dúvidas'},
+      '2026-11-23': {tipo:'aula', titulo:'Aula 03, Desafio 3/3: Análises Essenciais', curto:'Aula 03 - Análises'},
+      '2026-11-26': {tipo:'avancada', titulo:'Aula de Encerramento e Premiação', curto:'Encerramento'}
+    }
+  }
+};
+
+const hoje = new Date();
+const hojeStr = hoje.getFullYear() + '-' + String(hoje.getMonth()+1).padStart(2,'0') + '-' + String(hoje.getDate()).padStart(2,'0');
+
+function pickDefaultTurma(){
+  for (const key in turmas){
+    const t = turmas[key];
+    const datas = Object.keys(t.events);
+    if (datas.some(d => d >= hojeStr) && datas[0].slice(0,7) <= hojeStr.slice(0,7)){
+      const inRange = t.months.some(m => (m.ano + '-' + String(m.mes+1).padStart(2,'0')) === hojeStr.slice(0,7));
+      if (inRange) return key;
+    }
+  }
+  return Object.keys(turmas)[0];
+}
+
+let turmaAtual = 'T26';
+let selecionado = null;
+
+function renderTabs(){
+  const nav = document.getElementById('tabs');
+  nav.innerHTML = '';
+  if (Object.keys(turmas).length < 2) return;
+  Object.keys(turmas).forEach(key => {
+    const btn = document.createElement('button');
+    btn.textContent = turmas[key].label;
+    btn.className = key === turmaAtual ? 'active' : '';
+    btn.addEventListener('click', () => {
+      turmaAtual = key;
+      selecionado = null;
+      renderTabs();
+      renderMonths();
+      renderDetail();
+    });
+    nav.appendChild(btn);
+  });
+}
+
+function renderMonths(){
+  const container = document.getElementById('months');
+  container.innerHTML = '';
+  const t = turmas[turmaAtual];
+
+  t.months.forEach(({ano, mes}) => {
+    const block = document.createElement('div');
+    block.className = 'month-block';
+
+    const title = document.createElement('p');
+    title.className = 'month-name';
+    title.textContent = MESES[mes].charAt(0).toUpperCase() + MESES[mes].slice(1) + ' ' + ano;
+    block.appendChild(title);
+
+    const grid = document.createElement('div');
+    grid.className = 'grid';
+
+    DIAS_SEMANA.forEach(d => {
+      const w = document.createElement('div');
+      w.className = 'weekday';
+      w.textContent = d;
+      grid.appendChild(w);
+    });
+
+    const primeiroDia = new Date(ano, mes, 1).getDay();
+    const totalDias = new Date(ano, mes+1, 0).getDate();
+
+    for (let i=0; i<primeiroDia; i++){
+      const empty = document.createElement('div');
+      empty.className = 'cell empty';
+      grid.appendChild(empty);
+    }
+
+    for (let dia=1; dia<=totalDias; dia++){
+      const cell = document.createElement('div');
+      const dataStr = ano + '-' + String(mes+1).padStart(2,'0') + '-' + String(dia).padStart(2,'0');
+      const evento = t.events[dataStr];
+
+      cell.className = 'cell';
+
+      if (dataStr === hojeStr){
+        cell.classList.add('today');
+      }
+      if (evento){
+        cell.classList.add('event', evento.tipo);
+        cell.innerHTML =
+          '<span class="day-num">' + dia + '</span>' +
+          '<span class="day-label">' + evento.curto + '</span>';
+        if (dataStr === selecionado) cell.classList.add('selected');
+        cell.addEventListener('click', () => {
+          selecionado = dataStr;
+          renderMonths();
+          renderDetail();
+        });
+      } else {
+        cell.innerHTML = '<span class="day-num">' + dia + '</span>';
+      }
+      grid.appendChild(cell);
+    }
+
+    block.appendChild(grid);
+    container.appendChild(block);
+  });
+}
+
+function renderDetail(){
+  const detail = document.getElementById('detail');
+  const t = turmas[turmaAtual];
+  const evento = selecionado ? t.events[selecionado] : null;
+
+  if (!evento){
+    detail.className = 'detail empty';
+    detail.innerHTML = '<div class="d-title">Clique em um dia destacado para ver os detalhes da aula.</div>';
+    return;
+  }
+
+  const [ano, mes, dia] = selecionado.split('-');
+  const dataObj = new Date(Number(ano), Number(mes)-1, Number(dia));
+  const diaSemana = DIAS_SEMANA[dataObj.getDay()];
+
+  detail.className = 'detail';
+  detail.innerHTML =
+    '<div class="d-date">' + dia + '/' + mes + ' (' + diaSemana + '), ' + t.label + '</div>' +
+    '<div class="d-title">' + evento.titulo + '</div>';
+}
+
+renderTabs();
+renderMonths();
+renderDetail();
+</script>
+</body>
+</html>

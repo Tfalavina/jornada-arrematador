@@ -16,6 +16,7 @@
     --gold:#C79A3C;
     --wax:#C1483A;
     --slate:#71937F;
+    --blue:#2F7FE0;
     --border:#2B2B2F;
     --text:#D6D3C9;
     --muted:#8D8F94;
@@ -108,6 +109,7 @@
   .dot.aula{background:var(--aula-bg);}
   .dot.monitoria{background:var(--slate);}
   .dot.avancada{background:var(--wax);}
+  .dot.especial{background:var(--blue);}
 
   .months{
     display:flex;
@@ -129,7 +131,7 @@
   }
   .grid{
     display:grid;
-    grid-template-columns:repeat(7,1fr);
+    grid-template-columns:repeat(7,minmax(0,1fr));
     gap:3px;
   }
   .weekday{
@@ -163,6 +165,7 @@
     line-height:1;
   }
   .cell .day-label{
+    overflow-wrap:anywhere;
     font-size:10px;
     line-height:1.15;
     text-align:center;
@@ -180,6 +183,12 @@
   .cell.event.aula{background:var(--aula-bg);}
   .cell.event.monitoria{background:var(--slate); color:#0F1A14;}
   .cell.event.avancada{background:var(--wax);}
+  .cell.event.especial{background:var(--blue); box-shadow:0 0 0 2px #8FC1FF inset;}
+  .destaque{display:flex; align-items:center; gap:14px; margin:0 0 22px; padding:16px 18px; background:linear-gradient(135deg,#123A6B,#2F7FE0); border:1px solid #8FC1FF; color:#fff; border-radius:6px;}
+  .destaque .tag{font-size:11px; letter-spacing:.12em; text-transform:uppercase; background:#fff; color:#123A6B; padding:4px 8px; font-weight:700; border-radius:3px; white-space:nowrap;}
+  .destaque .txt{font-size:17px; font-weight:700; line-height:1.3;}
+  .destaque .sub{font-size:13px; opacity:.85; font-weight:400; margin-top:2px;}
+  .destaque[hidden]{display:none;}
   .cell.event:hover{filter:brightness(1.15);}
   .cell.event.selected{
     outline:2.5px solid var(--heading);
@@ -250,7 +259,13 @@
     <span><i class="dot boas-vindas"></i>Boas-vindas</span>
     <span><i class="dot aula"></i>Aula</span>
     <span><i class="dot monitoria"></i>Monitoria</span>
+    <span><i class="dot especial"></i>Aula especial</span>
     <span><i class="dot avancada"></i>Encerramento e Premiação</span>
+  </div>
+
+  <div class="destaque" id="destaque" hidden>
+    <span class="tag" id="destaque-tag">Hoje</span>
+    <div><div class="txt">Aula especial Blue Friday Arrematador</div><div class="sub">Segunda, 23/11. A Aula 03 passou para 30/11.</div></div>
   </div>
 
   <div class="months" id="months"></div>
@@ -268,14 +283,15 @@ const MESES = ['janeiro','fevereiro','março','abril','maio','junho','julho','ag
 const turmas = {
   T26: {
     label: 'Turma 26',
-    months: [{ano:2026, mes:10}],
+    months: [{ano:2026, mes:10}, {ano:2026, mes:11}],
     events: {
       '2026-11-05': {tipo:'boas-vindas', titulo:'Boas-vindas T26', curto:'Boas-vindas'},
       '2026-11-11': {tipo:'aula', titulo:'Aula 01, Desafio 1/3: O Código da Lei', curto:'Aula 01 - Lei'},
       '2026-11-16': {tipo:'aula', titulo:'Aula 02, Desafio 2/3: Módulo Caixa', curto:'Aula 02 - Caixa'},
       '2026-11-19': {tipo:'monitoria', titulo:'Monitoria, Aula de Dúvidas', curto:'Dúvidas'},
-      '2026-11-23': {tipo:'aula', titulo:'Aula 03, Desafio 3/3: Análises Essenciais', curto:'Aula 03 - Análises'},
-      '2026-11-26': {tipo:'avancada', titulo:'Aula de Encerramento e Premiação', curto:'Encerramento'}
+      '2026-11-23': {tipo:'especial', titulo:'Aula especial Blue Friday Arrematador', curto:'Blue Friday'},
+      '2026-11-30': {tipo:'aula', titulo:'Aula 03, Desafio 3/3: Análises Essenciais', curto:'Aula 03 - Análises'},
+      '2026-12-03': {tipo:'avancada', titulo:'Aula de Encerramento e Premiação', curto:'Encerramento'}
     }
   }
 };
@@ -403,6 +419,14 @@ function renderDetail(){
     '<div class="d-title">' + evento.titulo + '</div>';
 }
 
+(function(){
+  const D='2026-11-23', el=document.getElementById('destaque');
+  if (hojeStr <= D){
+    el.hidden=false;
+    if (hojeStr < D) document.getElementById('destaque-tag').textContent='23/11';
+    if (hojeStr === D) selecionado = D;
+  }
+})();
 renderTabs();
 renderMonths();
 renderDetail();

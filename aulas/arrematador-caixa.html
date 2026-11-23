@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arrematador Caixa · Arrematador</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,700..900&family=Instrument+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0d0f;--panel:#14171a;--panel2:#1a1e22;--line:#262b31;--fg:#f2efe8;--muted:#a4aab1;--c:#ff6a1f}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--fg);font-family:"Instrument Sans",system-ui,sans-serif;font-size:16px;line-height:1.55}
+.w{max-width:860px;margin:0 auto;padding:36px 22px 44px}
+.k{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--c)}
+h1{font-family:Archivo,sans-serif;font-stretch:118%;font-weight:900;text-transform:uppercase;font-size:clamp(30px,5vw,46px);line-height:1;margin:10px 0 12px}
+h2{font-family:Archivo,sans-serif;font-stretch:112%;font-weight:800;font-size:20px;margin:30px 0 12px}
+p{margin:0 0 10px} .lead{color:var(--muted);font-size:17.5px;margin-bottom:20px}
+b{color:var(--fg)} a{color:var(--c)}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 22px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 20px;border-radius:10px;font-weight:700;text-decoration:none;border:1px solid var(--line);background:var(--panel2);color:var(--fg)}
+.btn.pri{background:var(--c);border-color:var(--c);color:#0b0d0f}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.card{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--c);border-radius:12px;padding:14px 16px}
+.card b{display:block;margin-bottom:3px} .card span{color:var(--muted);font-size:14.5px} .card a{font-weight:700;font-size:14px;text-decoration:none}
+ol.st{list-style:none;counter-reset:s;margin:0;padding:0;display:grid;gap:10px}
+ol.st li{counter-increment:s;display:grid;grid-template-columns:38px 1fr;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+ol.st li:before{content:counter(s);width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-family:Archivo,sans-serif;font-weight:900;background:color-mix(in srgb,var(--c) 18%,transparent);color:var(--c);border:2px solid var(--c)}
+ol.st li>div>b{display:block} ol.st span{color:var(--muted);font-size:14.5px}
+ul.ck{list-style:none;margin:0;padding:0;display:grid;gap:8px} ul.ck li{padding-left:26px;position:relative} ul.ck li:before{content:"✓";position:absolute;left:4px;color:var(--c);font-weight:800}
+.note{background:color-mix(in srgb,var(--c) 10%,var(--panel));border:1px solid color-mix(in srgb,var(--c) 45%,var(--line));border-radius:12px;padding:14px 16px;margin-top:16px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px} .stats div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center}
+.stats strong{display:block;font-family:Archivo,sans-serif;font-weight:900;font-size:28px;color:var(--c)} .stats span{color:var(--muted);font-size:13.5px}
+.video{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;border:1px solid var(--line);margin:6px 0 4px} .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.foot{margin-top:30px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+@media (max-width:560px){.stats{grid-template-columns:1fr}}
+
+.dir{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0 8px}
+.dir a{display:block;text-decoration:none;color:var(--fg);background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px;border-top:4px solid var(--c)}
+.dir a.pos{border-top-color:#3fb37f}
+.dir .tg{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--c)}
+.dir a.pos .tg{color:#3fb37f}
+.dir strong{display:block;font-family:Archivo,sans-serif;font-weight:900;font-size:21px;line-height:1.15;margin:6px 0 6px}
+.dir span{display:block;color:var(--muted);font-size:14.5px}
+.dir em{display:inline-block;margin-top:12px;font-style:normal;font-weight:700;background:var(--c);color:#0b0d0f;padding:10px 14px;border-radius:9px}
+.dir a.pos em{background:#3fb37f}
+@media (max-width:620px){.dir{grid-template-columns:1fr}}
+</style></head><body><main class="w">
+<div class="k">Programa Arrematador Caixa</div><h1>Arrematador Caixa</h1>
+<p class="lead">Assessoria do Arrematador Caixa para imóveis da Caixa Econômica Federal. Tem um time para te ajudar antes do lance e outro para cuidar do pós-arrematação.</p>
+
+<h2>Com qual time você precisa falar?</h2>
+<div class="dir">
+<a href="https://wa.me/5519974062139?text=Ol%C3%A1%2C%20preciso%20de%20ajuda%20antes%20de%20dar%20meu%20lance" target="_blank" rel="noopener"><div class="tg">Ainda não arrematei</div><strong>Suporte pré-arrematação</strong><span>Ajuda em todas as etapas antes do lance e tira suas dúvidas.</span><em>Falar com o pré-arrematação</em></a>
+<a class="pos" href="https://wa.me/5519990195358?text=Quero%20informar%20uma%20arremata%C3%A7%C3%A3o" target="_blank" rel="noopener"><div class="tg">Já arrematei</div><strong>Suporte pós-arrematação</strong><span>Informe sua arrematação e garanta os serviços do Arrematador Caixa.</span><em>Informar minha arrematação</em></a>
+</div>
+
+<h2>O que é o serviço pós-arrematação</h2>
+<p>Depois de arrematar, você precisa indicar uma imobiliária credenciada na Caixa para conduzir essa etapa. A Caixa oferece esse serviço para imóveis comprados nos leilões dela, sem custo adicional.</p>
+<p>A imobiliária dá suporte e orientação no levantamento e na quitação de débitos propter rem, no ITBI e nos procedimentos de cartório.</p>
+<div class="note"><b>Basta indicar o CRECI do Arrematador</b> para ter esses benefícios. <a href="https://www.arrematadorcaixa.com.br/creci" target="_blank" rel="noopener">Veja os números de CRECI do Arrematador em todo o Brasil</a>.</div>
+
+<h2>Etapas do pós-arrematação</h2>
+<ol class="st">
+<li><div><b>Levantamento propter rem</b><span>Identificação e intermediação com o banco para quitar débitos como IPTU, condomínio e taxa de lixo, quando houver no estado ou município. A equipe verifica para você.</span></div></li>
+<li><div><b>ITBI</b><span>Emissão da guia do imposto municipal obrigatório depois da compra do imóvel.</span></div></li>
+<li><div><b>Cartório</b><span>Direcionamento para fazer a escritura de compra e venda e o registro do imóvel de forma online, com mais tempo, segurança e facilidade.</span></div></li>
+</ol>
+
+<div class="note">Arrematou na modalidade <b>Venda Online</b> ou <b>Venda Direta</b>? Você também tem orientação jurídica para a desocupação amigável, sem custo adicional.</div>
+
+<div class="btns">
+<a class="btn pri" style="background:#3fb37f;border-color:#3fb37f" href="https://wa.me/5519990195358?text=Quero%20informar%20uma%20arremata%C3%A7%C3%A3o" target="_blank" rel="noopener">Já arrematei: informar arrematação</a>
+<a class="btn" href="https://wa.me/5519974062139?text=Ol%C3%A1%2C%20preciso%20de%20ajuda%20antes%20de%20dar%20meu%20lance" target="_blank" rel="noopener">Ainda não arrematei: tirar dúvidas</a>
+<a class="btn" href="https://www.arrematadorcaixa.com.br/creci" target="_blank" rel="noopener">Ver CRECI do Arrematador</a>
+</div>
+
+<p class="foot">Pré-arrematação: (19) 97406-2139. Pós-arrematação: (19) 99019-5358.</p>
+</main></body></html>
